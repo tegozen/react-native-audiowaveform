@@ -55,6 +55,7 @@ typedef enum {
 @property(nonatomic) id<OGWaveDelegateProtocol> delegate;
 @property (nonatomic, copy) RCTBubblingEventBlock onPress;
 @property (nonatomic, copy) RCTBubblingEventBlock onFinishPlay;
+@property (nonatomic, copy) RCTBubblingEventBlock onFinalData;
 //@property(nonatomic) NSDictionary * propSrc;
 
 //@property (nonatomic, strong) AVAudioPlayer *_audioPlayer;

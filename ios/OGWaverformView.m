@@ -449,6 +449,9 @@
 
     NSLog(@"DCDCDCDCD %@",self);
 
+    if(finalData){
+        [_delegate OGWaveGetFinalData:self finalData:finalData];
+    }
     return finalData;
 }
 
