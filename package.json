@@ -86,7 +86,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/juananime/react-native-audiowaveform.git"
+    "url": "git+https://github.com/tegozen/react-native-audiowaveform.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
