@@ -17,12 +17,14 @@
 package com.ringdroid;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.ScaleGestureDetector;
@@ -33,6 +35,7 @@ import com.otomogroove.OGReactNativeWaveform.OGWaveView;
 import com.ringdroid.soundfile.SoundFile;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -453,6 +456,8 @@ public class WaveformView extends View {
         int i = 0;
         // Draw waveform
 
+        Bitmap buffCanvasBitmap = Bitmap.createBitmap(measuredWidth, measuredHeight, Bitmap.Config.ARGB_8888);
+        Canvas tempcanvas = new Canvas(buffCanvasBitmap);
         for (i = 0; i < measuredWidth; i++) {
 
             int pos =  start + Math.round((i*width)/measuredWidth);
@@ -464,10 +469,20 @@ public class WaveformView extends View {
                         ctr + 1 + mHeightsAtThisZoomLevel[pos],
                         mUnselectedLinePaint
                 );
+                drawWaveformLine(
+                        tempcanvas, i,
+                        ctr - mHeightsAtThisZoomLevel[pos],
+                        ctr + 1 + mHeightsAtThisZoomLevel[pos],
+                        mUnselectedLinePaint
+                );
             }
 
         }
-
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        buffCanvasBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        Log.e("jkjlk", encoded);
 
     }
 
