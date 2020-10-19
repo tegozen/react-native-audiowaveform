@@ -16,6 +16,7 @@ export default class WaveForm extends PureComponent<WaveObjectPropsType, StateTy
     super(props);
     this._onPress = this._onPress.bind(this);
     this._onFinishPlay = this._onFinishPlay.bind(this);
+    this._onFinalData = this._onFinalData.bind(this);
   }
 
   _makeid() {
@@ -41,7 +42,7 @@ export default class WaveForm extends PureComponent<WaveObjectPropsType, StateTy
     }
   }
 
-  __onFinalData(e) {
+  _onFinalData(e) {
     const event = Platform.OS === "ios" ? e.nativeEvent : e;
     if (this.props.onFinalData) {
       this.props.onFinalData(event);
@@ -87,7 +88,7 @@ export default class WaveForm extends PureComponent<WaveObjectPropsType, StateTy
       componentID
     };
 
-    return <OGWaverformView {...nativeProps} onPress={this._onPress} onFinishPlay={this._onFinishPlay} />;
+    return <OGWaverformView {...nativeProps} onPress={this._onPress} onFinishPlay={this._onFinishPlay} onFinalData={this._onFinalData} />;
   }
 }
 
