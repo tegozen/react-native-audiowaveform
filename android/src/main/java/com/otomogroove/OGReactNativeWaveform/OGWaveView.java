@@ -47,7 +47,7 @@ public class OGWaveView extends FrameLayout {
         super(context);
         mContext = context;
 
-        mWaveView = new WaveformView(mContext, this);
+        mWaveView = new WaveformView(mContext, this, context);
         mUIWave = new OGUIWaveView(mContext);
 
 

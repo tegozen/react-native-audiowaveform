@@ -30,7 +30,10 @@ import android.view.GestureDetector;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.otomogroove.OGReactNativeWaveform.OGWaveView;
 import com.ringdroid.soundfile.SoundFile;
 
@@ -197,6 +200,7 @@ public class WaveformView extends View {
         public void waveformZoomOut();
     };
 
+    private ReactContext reactContext;
     // Colors
     private Paint teswtPaint;
     private Paint mGridPaint;
@@ -232,10 +236,10 @@ public class WaveformView extends View {
     private OGWaveView waveView;
     public static String tempPath; 
     
-    public WaveformView(Context context, OGWaveView waveView) {
+    public WaveformView(Context context, OGWaveView waveView, ReactContext reactContext) {
         super(context);
         tempPath = context.getFilesDir().getAbsolutePath();
-
+    this.reactContext = reactContext;
         this.waveView = waveView;
 
         // We don't want keys, the markers get these
@@ -482,8 +486,9 @@ public class WaveformView extends View {
         buffCanvasBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream .toByteArray();
         String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-        Log.e("jkjlk", encoded);
-
+        WritableMap map = Arguments.createMap();
+        map.putString("finalData",encoded);
+        this.reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("OGFinalData", map);
     }
 
     /**

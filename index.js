@@ -41,9 +41,17 @@ export default class WaveForm extends PureComponent<WaveObjectPropsType, StateTy
     }
   }
 
+  __onFinalData(e) {
+    const event = Platform.OS === "ios" ? e.nativeEvent : e;
+    if (this.props.onFinalData) {
+      this.props.onFinalData(event);
+    }
+  }
+
   componentWillMount() {
     DeviceEventEmitter.addListener("OGOnPress", this._onPress);
     DeviceEventEmitter.addListener("OGFinishPlay", this._onFinishPlay);
+    DeviceEventEmitter.addListener("OGFinalData", this._onFinalData);
     const componentID = this._makeid();
     this.setState({ componentID });
   }
